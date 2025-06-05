@@ -81,7 +81,4 @@ This project is open source under the MIT License.
 
 Thank you for visiting my portfolio! Feel free to connect with me via the Contact page.
 
-```
 
-If you want, I can also prepare the actual file and save it for you. Just let me know!
-```
