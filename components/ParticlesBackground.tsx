@@ -1,30 +1,30 @@
 'use client';
 
-import { useCallback } from 'react';
-import { Particles } from '@tsparticles/react';
-import { Engine } from '@tsparticles/engine';
+import Particles from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 
-export default function ParticlesBackground() {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
-  }, []);
-
+export default function ParticlesEffect() {
   return (
     <Particles
       id="tsparticles"
+      className="absolute inset-0"
       options={{
         fullScreen: { enable: true, zIndex: 0 },
         background: { color: 'transparent' },
         particles: {
-          number: { value: 40, density: { enable: true } },
-          color: { value: '#facc15' },
+          number: { value: 20, density: { enable: true } },
+          color: {
+            value: [
+              '#facc15', // Yellow for dark mode
+              '#1f2937', // Dark gray for light mode
+            ],
+          },
           shape: { type: 'circle' },
-          opacity: { value: 0.2 },
-          size: { value: { min: 1, max: 6 } },
+          opacity: { value: 0.5 },
+          size: { value: { min: 1, max: 4 } },
           move: {
             enable: true,
-            speed: 1,
+            speed: 0.5,
             direction: 'none',
             outModes: 'out',
           },
@@ -36,7 +36,7 @@ export default function ParticlesBackground() {
           },
           modes: {
             repulse: { distance: 100 },
-            push: { quantity: 4 },
+            push: { quantity: 2 },
           },
         },
         detectRetina: true,

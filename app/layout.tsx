@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  viewport: "width=device-width, initial-scale=1.0",
+  openGraph: {
+    title: "Raj's Portfolio",
+    description: "Portfolio of Raj, an undergraduate AI student who loves building things in public, writing blogs, and teaching.",
+    url: "https://your-portfolio-url.com", // Replace with your actual URL
+    siteName: "Raj's Portfolio",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -22,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
+    <html lang="en" dir="ltr">
+      <body>
         <ClientBody className={`${inter.variable} antialiased`}>
           {children}
         </ClientBody>
