@@ -90,3 +90,14 @@ body {
 .glow-particles canvas {
   filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.5));
 }
+
+/* Add a @font-face rule for font-gloria (using a fallback cursive font) so that the font-gloria class is applied. */
+@font-face {
+  font-family: 'Gloria Hallelujah';
+  src: local('Gloria Hallelujah'), local('GloriaHallelujah'), url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Gilda+Display&family=Gloria+Hallelujah&family=Rubik+Vinyl&display=swap');
+  font-weight: 400; /* (or adjust as needed) */
+  font-style: normal;
+}
+
+/* (Optional) Define a fallback cursive font if Gloria is not available. */
+.font-gloria { font-family: 'Gloria Hallelujah', cursive; }

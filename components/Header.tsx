@@ -47,13 +47,16 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 h-[var(--header-height)] z-50 bg-black/95 header-blur">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex justify-between items-center h-full">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
+          {/* Logo with negative left margin to align at viewport edge */}
+          <Link
+            href="/"
+            className="flex items-center gap-0 hover:opacity-80 transition-opacity ml-[-1rem]"
+          >
             <Image
               src="/favicon.png"
               alt="Raj's Logo"
-              width={40}
-              height={40}
+              width={32}
+              height={32}
               className="object-contain"
               priority
             />
@@ -76,7 +79,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
-            className="menu-button md:hidden text-gray-400 hover:text-white hover:bg-gray-800/50"
+            className="menu-button md:hidden text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-md p-1"
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
           >
