@@ -1,4 +1,4 @@
-# Rajendran's Portfolio Website
+# My portfolio
 
 Welcome to my personal portfolio website! This project showcases my skills, experience, and projects in Artificial Intelligence, Data Science, and software development.
 
@@ -38,7 +38,7 @@ I am Rajendran, an undergraduate AI & Data Science student at Coimbatore Institu
    ```bash
    git clone https://github.com/Rajendran2201/portfolio
    cd portfolio
-``
+   ```
 
 2. Install dependencies:
 
