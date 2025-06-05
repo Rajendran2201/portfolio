@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 
-const ParticlesEffect = dynamic(() => import('./Particlesbackground'), {
+const ParticlesEffect = dynamic(() => import('./ParticlesBackground'), {
   ssr: false,
 });
 

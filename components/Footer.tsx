@@ -1,19 +1,18 @@
-// components/Footer.tsx
 import { CodeBracketIcon, LinkIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import NextLink from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 bg-black text-white py-6 px-4 sm:px-6 md:px-12 border-t border-gray-800">
+    <footer className="relative z-10 py-6 px-4 sm:px-6 md:px-12 border-t border-gray-800" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col items-center sm:items-start">
-          <p className="text-gray-400 text-sm sm:text-base">© {new Date().getFullYear()} Raj. All rights reserved.</p>
+          <p className="text-gray-500 dark:text-gray-300 text-sm sm:text-base">© 2025 Raj. All rights reserved.</p>
           <nav className="mt-2 flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-4">
-            <NextLink href="/about" className="text-gray-400 hover:text-yellow-400 text-sm sm:text-base">About</NextLink>
-            <NextLink href="/experience" className="text-gray-400 hover:text-yellow-400 text-sm sm:text-base">Work</NextLink>
-            <NextLink href="/projects" className="text-gray-400 hover:text-yellow-400 text-sm sm:text-base">Projects</NextLink>
-            <NextLink href="/blog" className="text-gray-400 hover:text-yellow-400 text-sm sm:text-base">Blog</NextLink>
-            <NextLink href="/contact" className="text-gray-400 hover:text-yellow-400 text-sm sm:text-base">Contact</NextLink>
+            <NextLink href="/about" className="text-gray-500 dark:text-gray-300 hover:text-yellow-400 text-sm sm:text-base">About</NextLink>
+            <NextLink href="/experience" className="text-gray-500 dark:text-gray-300 hover:text-yellow-400 text-sm sm:text-base">Work</NextLink>
+            <NextLink href="/projects" className="text-gray-500 dark:text-gray-300 hover:text-yellow-400 text-sm sm:text-base">Projects</NextLink>
+            <NextLink href="/blog" className="text-gray-500 dark:text-gray-300 hover:text-yellow-400 text-sm sm:text-base">Blog</NextLink>
+            <NextLink href="/contact" className="text-gray-500 dark:text-gray-300 hover:text-yellow-400 text-sm sm:text-base">Contact</NextLink>
           </nav>
         </div>
         <div className="flex space-x-4 mt-4 sm:mt-0">
