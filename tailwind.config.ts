@@ -12,6 +12,9 @@ const config: Config = {
         background: 'var(--color-background)',
         foreground: 'var(--color-foreground)',
       },
+      fontFamily: {
+        gloria: ["'Gloria Hallelujah'", "cursive"],
+      },
     },
   },
   plugins: [],
