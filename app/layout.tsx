@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand, Gloria_Hallelujah } from "next/font/google";
 import "./globals.css";
 import ClientBody from "@/components/ClientBody";
+import Header from "@/components/Header";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -42,8 +43,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="ltr">
-      <body suppressHydrationWarning>
-        <ClientBody className={`${quicksand.variable} ${gloriaHallelujah.variable} antialiased`}>
+      <body suppressHydrationWarning className="flex flex-col min-h-screen">
+        <Header />
+        <ClientBody className='flex-1'>
           {children}
         </ClientBody>
       </body>

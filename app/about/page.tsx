@@ -1,22 +1,55 @@
 import React from "react";
 import Header from "@/components/Header";
+import { aboutContent } from "@/src/data/aboutContent";
 
 const About: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
-    <Header />
-    <section className="max-w-4xl mx-auto px-6 py-16 text-gray-100 bg-black rounded-lg shadow-lg">
-      <h2 className="text-4xl font-bold mb-6 text-yellow-400">About Me</h2>
-      <p className="text-lg leading-relaxed mb-4">
-        I am a dedicated and curious student specializing in Artificial Intelligence and Data Science at Coimbatore Institute of Technology (CIT). My passion lies in leveraging cutting-edge AI technologies to solve real-world problems and contribute meaningful solutions that impact society.
-      </p>
-      <p className="text-lg leading-relaxed mb-4">
-        Throughout my academic journey, I have cultivated strong analytical and programming skills, complemented by hands-on experience in diverse projects spanning advanced object detection, medical AI applications, and intelligent educational platforms. I am deeply interested in research that explores the intersection of machine learning, computer vision, and signal processing, striving to push the boundaries of what AI can achieve.
-      </p>
-      <p className="text-lg leading-relaxed">
-        Beyond technical expertise, I actively seek opportunities to collaborate, learn, and mentor peers, believing that knowledge-sharing fuels innovation. I am enthusiastic about continuous learning and excited to contribute to impactful projects that address challenges across industries.
-      </p>
-    </section>
+      <Header />
+      <section className="max-w-4xl mx-auto px-6 py-16 text-gray-100 bg-black rounded-lg shadow-lg">
+        {/* Heading with Download Button */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-4xl font-bold text-yellow-400">{aboutContent.title}</h2>
+          <a
+  href="/resume.pdf"
+  download
+  className="px-5 py-2 text-yellow-400 font-semibold rounded-md border-2 border-yellow-400 border-dotted hover:bg-yellow-400 hover:text-black transition cursor-pointer"
+>
+  Download Resume
+</a>
+
+        </div>
+
+        {aboutContent.highlights.map((paragraph, idx) => (
+          <p key={idx} className="text-lg leading-relaxed mb-4">
+            {paragraph}
+          </p>
+        ))}
+
+        {/* GitHub Contribution Graph */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
+            GitHub Contributions
+          </h3>
+          <img
+            src="https://ghchart.rshah.org/Rajendran2201"
+            alt="GitHub contribution graph"
+            className="w-full max-w-xl mx-auto rounded-lg shadow-lg"
+          />
+        </div>
+
+        {/* LeetCode Contribution Graph */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
+            LeetCode Contributions
+          </h3>
+          <img
+            src="https://leetcard.jacoblin.cool/rajendran2201?theme=dark"
+            alt="LeetCode stats card"
+            className="w-full max-w-xl mx-auto rounded-lg shadow-lg"
+          />
+        </div>
+      </section>
     </div>
   );
 };

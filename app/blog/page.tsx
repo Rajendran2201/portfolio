@@ -1,24 +1,29 @@
-import Link from 'next/link'; // Fixed import
-import Header from '@/components/Header'
+// app/blog/page.tsx
+import Header from '@/components/Header';
+import { getMediumLinks } from '@/lib/getMediumLinks';
 
-export default function Blog() {
+export default async function Blog() {
+  const posts = await getMediumLinks();
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-
-      {/* Blog Section */}
-      <section id="blog" className="py-16 px-6">
-        <h2 className="text-4xl font-bold text-white mb-8 text-center">Blog</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-white">Blog Post 1</h3>
-            <p className="text-gray-400 mt-2">A short excerpt from your first blog post.</p>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold text-white">Blog Post 2</h3>
-            <p className="text-gray-400 mt-2">A short excerpt from your second blog post.</p>
-          </div>
-        </div>
+      <section id="blog" className="py-16 px-6 max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold mb-8 text-white text-left">Blog</h2>
+        <ul className="space-y-4 list-disc list-inside text-white text-base">
+          {posts.map((post, index) => (
+            <li key={index} className="hover:text-yellow-400 transition-colors duration-200">
+              <a
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-2 hover:underline"
+              >
+                {post.title}
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
