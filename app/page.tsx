@@ -4,12 +4,12 @@ import Header from "@/components/Header";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="bg-black text-white relative">
       {/* Header */}
       <Header />
 
       {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-center px-4 md:px-6" style={{ minHeight: 'calc(100vh - 120px)' }}>
+      <section className="flex flex-col md:flex-row items-center justify-center mr-30 px-4 md:px-6">
         {/* Left - Image */}
         <div className="relative flex-shrink-0">
           <Image
@@ -18,6 +18,7 @@ export default function Home() {
             width={240}
             height={320}
             className="rounded-lg object-contain"
+            priority
           />
           <div className="absolute bottom-0 left-0 flex space-x-2">
             <div className="w-6 h-6 bg-yellow-500 rounded-full"></div>
@@ -94,16 +95,6 @@ export default function Home() {
                 Contact me
               </button>
             </Link>
-            {/* Arrow and label for mobile (below button) */}
-            <div className="flex flex-col items-center mt-4 md:hidden">
-              <svg className="w-24 h-8" viewBox="0 0 96 32" fill="none">
-                <path d="M0,24 Q48,0 96,24" stroke="#fff" strokeWidth="2" fill="none" markerEnd="url(#arrowheadmob)" />
-                <marker id="arrowheadmob" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                  <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
-                </marker>
-              </svg>
-              <span className="text-white font-mono text-sm mt-1" style={{ fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Say hi!</span>
-            </div>
             {/* Arrow and label for desktop (right of button) */}
             <svg
               className="hidden md:absolute md:left-full md:top-1/2 md:-translate-y-1/2 md:ml-2 md:w-32 md:h-16 md:block"
@@ -138,8 +129,8 @@ export default function Home() {
         </div>
       </section>
       {/* Quote - Always Visible at Bottom */}
-      <div className="w-full px-4 mt-8 mb-6">
-        <p className="text-white-400 italic text-base text-center max-w-xl mx-auto">
+      <div className="w-full px-4 mt-4 mb-6">
+        <p className="text-white-400 italic text-base mt-20 text-center max-w-xl mx-auto font-gloria-hallelujah">
           "Whoever is delighted in solitude, is either a wild beast or a god."
         </p>
       </div>

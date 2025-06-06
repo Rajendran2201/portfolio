@@ -32,6 +32,11 @@ export default function Header() {
       text: "What I do?",
     },
     {
+      href: "/projects",
+      icon: PencilSquareIcon,
+      text: "My Projects",
+    },  
+    {
       href: "/blog",
       icon: PencilSquareIcon,
       text: "What I write?",
@@ -41,6 +46,7 @@ export default function Header() {
       icon: ChatBubbleLeftEllipsisIcon,
       text: "Wanna contact me?",
     },
+     
   ];
 
   return (

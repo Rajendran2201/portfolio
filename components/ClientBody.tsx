@@ -28,9 +28,9 @@ export default function ClientBody({
   }, []);
 
   return (
-    <div className={`relative min-h-screen bg-black text-white overflow-hidden ${className}`}>
+    <div className={`relative min-h-screen bg-black text-white ${className}`}>
       {mounted && <ParticlesBackground />}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 min-h-screen">{children}</div>
     </div>
   );
 }

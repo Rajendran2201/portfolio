@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 
 :root {
   --background: #ffffff;
@@ -14,7 +15,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1E1E1E;
+    --background: black;
     --foreground: #ededed;
   }
 }
@@ -25,6 +26,7 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   @apply transition-colors duration-300 ease-in-out;
+  
 }
 
 @layer base {
