@@ -130,3 +130,62 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* globals.css */
+
+article h1, article h2, article h3, article h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #facc15; /* yellow-400 */
+}
+
+article p {
+  margin-bottom: 1rem;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+}
+
+article a {
+  color: #fbbf24; /* yellow-300 */
+  text-decoration: underline;
+}
+
+article ul, article ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+article code {
+  background: #1f2937; /* gray-800 */
+  color: #fbbf24;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+/* smooth underline animation on links */
+.prose a {
+  position: relative;
+  color: #fbbf24; /* yellow-400 */
+  text-decoration: none;
+}
+
+.prose a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fbbf24;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.prose a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
