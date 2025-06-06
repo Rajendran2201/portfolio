@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 
 const About: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
+    <div className="flex flex-col min-h-screen">
     <Header />
     <section className="max-w-4xl mx-auto px-6 py-16 text-gray-100 bg-black rounded-lg shadow-lg">
       <h2 className="text-4xl font-bold mb-6 text-yellow-400">About Me</h2>

@@ -50,7 +50,7 @@ export default function Header() {
           {/* Logo with negative left margin to align at viewport edge */}
           <Link
             href="/"
-            className="flex items-center gap-0 hover:opacity-80 transition-opacity ml-[-1rem]"
+            className="flex items-center gap-0 hover:opacity-80 transition-opacity md:ml-[-1rem]"
           >
             <Image
               src="/favicon.png"

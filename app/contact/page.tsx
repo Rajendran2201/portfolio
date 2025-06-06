@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+
 export default function Contact() {
   return (
     <div className="min-h-screen bg-black text-white">
@@ -14,6 +16,8 @@ export default function Contact() {
           Email me
         </button>
       </section>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

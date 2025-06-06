@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 
 export default function Experience() {
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
+    <div className="flex flex-col min-h-screen" >
       {/* Header */}
       <Header />
 
@@ -31,8 +31,6 @@ export default function Experience() {
         </Link>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
