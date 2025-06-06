@@ -1,8 +1,8 @@
-// app/blog/page.tsx
 import Header from '@/components/Header';
 import { getMediumLinks } from '@/lib/getMediumLinks';
 import { getGitHubPosts } from '@/lib/githubPosts';
-import ParticlesBackground from '@/components/ParticlesBackground'; // Adjust path if needed
+import ParticlesBackground from '@/components/ParticlesBackground';
+import BooksCarousel from '@/components/booksCarousel';
 
 export default async function Blog() {
   const mediumPosts = await getMediumLinks();
@@ -23,10 +23,8 @@ export default async function Blog() {
 
   return (
     <>
-      {/* Particles Background covering full viewport */}
       <ParticlesBackground />
 
-      {/* Content container with transparent bg and higher z-index */}
       <div className="relative min-h-screen bg-transparent text-white z-40">
         <Header className="z-50" />
 
@@ -53,6 +51,12 @@ export default async function Blog() {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Books Carousel */}
+        <section id="books" className="py-16 px-6 max-w-6xl mx-auto relative z-40">
+          <h2 className="text-4xl font-bold mb-8 text-white text-left">📚 Books I've Read</h2>
+          <BooksCarousel />
         </section>
       </div>
     </>

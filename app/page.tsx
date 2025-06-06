@@ -3,12 +3,15 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import ParticlesBackground from "@/components/ParticlesBackground"; // Adjust path if needed
 import { siteConfig } from "@/src/data/siteConfig";
+import WelcomeAnimation from "@/components/WelcomeAnimation";
 
 export default function Home() {
   const { name, image, tagline, quote, contactLinkText } = siteConfig;
 
   return (
     <>
+
+<WelcomeAnimation />
       {/* Particles background fixed full screen behind everything */}
       <ParticlesBackground />
 

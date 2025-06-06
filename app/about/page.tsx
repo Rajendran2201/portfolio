@@ -81,7 +81,7 @@ const About: React.FC = () => {
 {/* Infinite Scrolling Photo Carousel */}
 <div className="mt-12 overflow-hidden">
   <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
-    Moments Captured 📸
+    Photos
   </h3>
   <div className="w-full overflow-hidden relative">
     <div className="flex gap-4 animate-slide-infinite w-max">
