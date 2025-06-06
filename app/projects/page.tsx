@@ -156,7 +156,7 @@ export default function Projects() {
             animate={{ opacity: 1, y: 0 }}
           >
             <CodeBracketIcon className="w-10 h-10 text-white" />
-            My Projects
+            Things I've Built
           </motion.h1>
 
           <div className="grid md:grid-cols-2 gap-8">

@@ -1,25 +1,27 @@
+// app/page.tsx or app/home/page.tsx
+
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
-import ParticlesBackground from "@/components/ParticlesBackground"; // Adjust path if needed
-import { siteConfig } from "@/src/data/siteConfig";
+import ParticlesBackground from "@/components/ParticlesBackground";
 import WelcomeAnimation from "@/components/WelcomeAnimation";
+import { siteConfig } from "@/src/data/siteConfig";
 
 export default function Home() {
   const { name, image, tagline, quote, contactLinkText } = siteConfig;
 
   return (
     <>
-
-<WelcomeAnimation />
-      {/* Particles background fixed full screen behind everything */}
+      <WelcomeAnimation />
       <ParticlesBackground />
 
-      {/* Main content with transparent bg and higher z-index */}
       <div className="relative min-h-[calc(100vh-var(--header-height))] pt-[var(--header-height)] flex flex-col items-center justify-center bg-transparent text-white z-40">
         <Header className="z-50" />
 
-        <section className="flex flex-col md:flex-row items-center justify-center px-4 md:px-6">
+        <section className="flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 w-full max-w-7xl mx-auto gap-10 md:gap-16 flex-wrap">
+          {/* Profile Image */}
           <div className="relative flex-shrink-0">
             <Image
               src={image}
@@ -36,11 +38,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="md:ml-12 mt-10 md:mt-0 text-center md:text-left w-full max-w-xl">
-            <p className="text-yellow-400 text-lg">{tagline.intro}</p>
-            <h1 className="text-5xl md:text-6xl font-bold mt-4">{tagline.heading}</h1>
+          {/* Text Content */}
+          <div className="text-center md:text-left w-full max-w-xl">
+            <p className="text-yellow-400 text-base sm:text-lg">{tagline.intro}</p>
 
-            <h2 className="text-xl md:text-2xl mt-6 font-bold leading-tight whitespace-nowrap">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mt-4">
+              {tagline.heading}
+            </h1>
+
+            <h2 className="text-lg sm:text-xl md:text-2xl mt-6 font-bold leading-snug sm:leading-tight">
               <span className="text-gray-300">I </span>
               <span className="inline-block relative">
                 <span className="font-bold text-gray-300 underline decoration-2 decoration-gray-400 underline-offset-2">
@@ -59,7 +65,9 @@ export default function Home() {
               </span>
               <span className="text-gray-300"> and bring ideas to </span>
               <span className="relative ml-1 align-middle inline-block">
-                <span className="font-bold text-gray-300 relative z-10 px-1">{tagline.highlight[2]}</span>
+                <span className="font-bold text-gray-300 relative z-10 px-1">
+                  {tagline.highlight[2]}
+                </span>
                 <svg
                   className="absolute top-0 left-0 w-full h-full z-0"
                   viewBox="0 0 120 40"
@@ -82,16 +90,16 @@ export default function Home() {
               <span className="text-gray-300">.</span>
             </h2>
 
-            <p className="text-gray-400 mt-6 max-w-md text-lg">{tagline.description}</p>
+            <p className="text-gray-400 mt-6 text-base sm:text-lg">{tagline.description}</p>
 
             <div className="flex flex-col items-center mt-8 md:relative md:inline-block md:items-start">
               <Link href="/contact">
-                <button className="px-8 py-3 border-2 border-yellow-500 text-yellow-500 text-lg font-semibold hover:bg-yellow-500 hover:text-black transition rounded-lg relative z-10">
+                <button className="px-6 sm:px-8 py-3 border-2 border-yellow-500 text-yellow-500 text-base sm:text-lg font-semibold hover:bg-yellow-500 hover:text-black transition rounded-lg relative z-10">
                   {contactLinkText}
                 </button>
               </Link>
 
-              {/* Arrow SVG */}
+              {/* Arrow Line */}
               <svg
                 className="hidden md:absolute md:left-full md:top-1/2 md:-translate-y-1/2 md:ml-2 md:w-32 md:h-16 md:block"
                 viewBox="0 0 120 60"
@@ -109,7 +117,7 @@ export default function Home() {
                 </marker>
               </svg>
 
-              {/* Coffee chat message */}
+              {/* Coffee Chat Note */}
               <span
                 className="hidden md:block md:absolute md:left-full md:top-1/2 md:ml-36 text-white text-sm leading-tight whitespace-nowrap md:translate-y-4"
                 style={{
@@ -124,6 +132,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Quote Section */}
         <div className="w-full px-4 mt-4 mb-6">
           <p className="text-white-400 italic text-base mt-20 text-center max-w-xl mx-auto font-gloria-hallelujah">
             {quote}
