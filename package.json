@@ -16,6 +16,7 @@
     "@tsparticles/slim": "^3.8.1",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.22",
+    "lucide-react": "^0.513.0",
     "motion": "^12.16.0",
     "next": "15.3.3",
     "nodemailer": "^7.0.3",

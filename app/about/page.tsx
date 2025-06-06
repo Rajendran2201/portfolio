@@ -48,9 +48,25 @@ const About: React.FC = () => {
             className="w-full max-w-xl mx-auto rounded-lg shadow-lg"
           />
         </div>
+
+        {/* WakaTime Coding Activity */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
+            Coding Activity
+          </h3>
+          <div className="w-full max-w-3xl mx-auto rounded-lg overflow-hidden">
+            <embed
+              src="https://wakatime.com/share/@62373636-da3e-441b-8aac-c95bda45f20d/7e7da86c-120d-47fa-81b6-f462dd78eaa9.svg"
+              type="image/svg+xml"
+              className="w-full h-[400px]"
+            />
+          </div>
+        </div>
       </section>
     </div>
   );
 };
+
+
 
 export default About;
