@@ -1,192 +1,415 @@
+// First, install the required packages:
+// npm install react-particles tsparticles-slim tsparticles-engine
+
 // ParticlesBackground.tsx
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
-  color: string;
-}
+import { useCallback, useMemo } from 'react';
+import Particles from 'react-particles';
+import { loadSlim } from 'tsparticles-slim';
+import type { Container, Engine } from 'tsparticles-engine';
 
 export default function ParticlesBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const colors = ['#facc15', '#1f2937', '#ffffff'];
-
-    const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      initParticles();
-    };
-
-    const initParticles = () => {
-      const particleCount = Math.min(50, Math.floor((canvas.width * canvas.height) / 12000));
-      particlesRef.current = [];
-      
-      for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.6 + 0.2,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-      setIsLoaded(true);
-    };
-
-    const drawParticles = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particlesRef.current.forEach((particle, index) => {
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Bounce off edges
-        if (particle.x <= 0 || particle.x >= canvas.width) {
-          particle.vx *= -1;
-          particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        }
-        if (particle.y <= 0 || particle.y >= canvas.height) {
-          particle.vy *= -1;
-          particle.y = Math.max(0, Math.min(canvas.height, particle.y));
-        }
-
-        // Mouse repulsion effect
-        const dx = mouseRef.current.x - particle.x;
-        const dy = mouseRef.current.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 100) {
-          const force = (100 - distance) / 100;
-          particle.vx -= (dx / distance) * force * 0.5;
-          particle.vy -= (dy / distance) * force * 0.5;
-        }
-
-        // Apply some friction
-        particle.vx *= 0.99;
-        particle.vy *= 0.99;
-
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color === '#1f2937' 
-          ? `rgba(31, 41, 55, ${particle.opacity})`
-          : particle.color === '#facc15'
-          ? `rgba(250, 204, 21, ${particle.opacity})`
-          : `rgba(255, 255, 255, ${particle.opacity})`;
-        ctx.fill();
-
-        // Draw connections to nearby particles
-        particlesRef.current.slice(index + 1).forEach(otherParticle => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
-            const opacity = (120 - distance) / 120 * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(250, 204, 21, ${opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        });
-      });
-    };
-
-    const animate = () => {
-      drawParticles();
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
-    };
-
-    const handleClick = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-
-      // Add new particles on click
-      for (let i = 0; i < 3; i++) {
-        particlesRef.current.push({
-          x: clickX + (Math.random() - 0.5) * 20,
-          y: clickY + (Math.random() - 0.5) * 20,
-          vx: (Math.random() - 0.5) * 2,
-          vy: (Math.random() - 0.5) * 2,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.6 + 0.4,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-
-      // Remove excess particles
-      if (particlesRef.current.length > 80) {
-        particlesRef.current.splice(0, particlesRef.current.length - 80);
-      }
-    };
-
-    // Initialize
-    resizeCanvas();
-    animate();
-
-    // Event listeners
-    window.addEventListener('resize', resizeCanvas);
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('click', handleClick);
-
-    // Cleanup
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      window.removeEventListener('resize', resizeCanvas);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('click', handleClick);
-    };
+  const particlesInit = useCallback(async (engine: Engine) => {
+    // Load only the slim version to reduce bundle size
+    await loadSlim(engine);
   }, []);
+
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    // Optional callback when particles are loaded
+    console.log('Particles loaded:', container);
+  }, []);
+
+  const options = useMemo(() => ({
+    background: {
+      color: {
+        value: 'transparent',
+      },
+    },
+    fpsLimit: 60,
+    interactivity: {
+      events: {
+        onClick: {
+          enable: true,
+          mode: 'push',
+        },
+        onHover: {
+          enable: true,
+          mode: 'repulse',
+        },
+        resize: true,
+      },
+      modes: {
+        push: {
+          quantity: 4,
+        },
+        repulse: {
+          distance: 100,
+          duration: 0.4,
+        },
+      },
+    },
+    particles: {
+      color: {
+        value: ['#facc15', '#ffffff', '#9ca3af'],
+      },
+      links: {
+        color: '#facc15',
+        distance: 150,
+        enable: true,
+        opacity: 0.3,
+        width: 1,
+        triangles: {
+          enable: true,
+          opacity: 0.1,
+        },
+      },
+      collisions: {
+        enable: false,
+      },
+      move: {
+        direction: 'none',
+        enable: true,
+        outModes: {
+          default: 'bounce',
+        },
+        random: true,
+        speed: 1,
+        straight: false,
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200,
+        },
+      },
+      number: {
+        density: {
+          enable: true,
+          area: 800,
+        },
+        value: 50,
+        limit: 100,
+      },
+      opacity: {
+        value: { min: 0.3, max: 0.8 },
+        animation: {
+          enable: true,
+          speed: 1,
+          minimumValue: 0.3,
+          sync: false,
+        },
+      },
+      shape: {
+        type: ['circle', 'triangle'],
+      },
+      size: {
+        value: { min: 1, max: 3 },
+        animation: {
+          enable: true,
+          speed: 2,
+          minimumValue: 0.5,
+          sync: false,
+        },
+      },
+    },
+    detectRetina: true,
+    pauseOnBlur: true,
+    pauseOnOutsideViewport: true,
+  }), []);
 
   return (
     <div className="absolute inset-0 z-0">
-      <canvas
-        ref={canvasRef}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        options={options}
         className="w-full h-full"
-        style={{ background: 'transparent' }}
       />
-      {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-yellow-400 text-sm opacity-50">
-            Loading particles...
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
-// ClientBody.tsx
+// Alternative: More sophisticated particle configuration
+export function EnhancedParticlesBackground() {
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    console.log('Enhanced particles loaded:', container);
+  }, []);
+
+  const enhancedOptions = useMemo(() => ({
+    background: {
+      color: {
+        value: 'transparent',
+      },
+    },
+    fpsLimit: 60,
+    fullScreen: {
+      enable: false,
+      zIndex: 0,
+    },
+    interactivity: {
+      events: {
+        onClick: {
+          enable: true,
+          mode: ['push', 'bubble'],
+        },
+        onHover: {
+          enable: true,
+          mode: 'connect',
+          parallax: {
+            enable: true,
+            force: 60,
+            smooth: 10,
+          },
+        },
+        resize: true,
+      },
+      modes: {
+        push: {
+          quantity: 3,
+        },
+        bubble: {
+          distance: 200,
+          size: 6,
+          duration: 0.3,
+          opacity: 0.8,
+        },
+        connect: {
+          distance: 120,
+          links: {
+            opacity: 0.5,
+          },
+          radius: 60,
+        },
+      },
+    },
+    particles: {
+      color: {
+        value: ['#facc15', '#ffffff', '#6b7280', '#f59e0b'],
+      },
+      links: {
+        color: {
+          value: '#facc15',
+        },
+        distance: 120,
+        enable: true,
+        opacity: 0.4,
+        width: 1,
+        warp: true,
+        triangles: {
+          enable: true,
+          opacity: 0.05,
+        },
+      },
+      move: {
+        direction: 'none',
+        enable: true,
+        outModes: {
+          default: 'out',
+        },
+        random: true,
+        speed: { min: 0.5, max: 1.5 },
+        straight: false,
+        trail: {
+          enable: false,
+          length: 10,
+          fillColor: '#000000',
+        },
+        vibrate: false,
+        warp: false,
+      },
+      number: {
+        density: {
+          enable: true,
+          area: 1000,
+        },
+        value: 60,
+        limit: 120,
+      },
+      opacity: {
+        value: { min: 0.2, max: 0.7 },
+        animation: {
+          count: 0,
+          enable: true,
+          speed: 1,
+          sync: false,
+          destroy: 'none',
+          minimumValue: 0.2,
+          startValue: 'random',
+        },
+      },
+      reduceDuplicates: false,
+      shape: {
+        type: ['circle', 'triangle', 'polygon'],
+        options: {
+          polygon: {
+            sides: 6,
+          },
+        },
+      },
+      size: {
+        value: { min: 1, max: 4 },
+        animation: {
+          count: 0,
+          enable: true,
+          speed: 3,
+          sync: false,
+          destroy: 'none',
+          minimumValue: 0.5,
+          startValue: 'random',
+        },
+      },
+      stroke: {
+        width: 0,
+      },
+      zIndex: {
+        value: 0,
+        opacityRate: 1,
+        sizeRate: 1,
+        velocityRate: 1,
+      },
+      life: {
+        count: 0,
+        delay: {
+          value: 0,
+          sync: false,
+        },
+        duration: {
+          value: 0,
+          sync: false,
+        },
+      },
+    },
+    detectRetina: true,
+    duration: 0,
+    pauseOnBlur: true,
+    pauseOnOutsideViewport: true,
+    responsive: [
+      {
+        maxWidth: 768,
+        options: {
+          particles: {
+            number: {
+              value: 30,
+            },
+            links: {
+              distance: 100,
+            },
+          },
+        },
+      },
+      {
+        maxWidth: 480,
+        options: {
+          particles: {
+            number: {
+              value: 20,
+            },
+            links: {
+              distance: 80,
+            },
+          },
+        },
+      },
+    ],
+  }), []);
+
+  return (
+    <div className="absolute inset-0 z-0">
+      <Particles
+        id="enhanced-tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        options={enhancedOptions}
+        className="w-full h-full"
+      />
+    </div>
+  );
+}
+
+// Minimal performance-focused version
+export function MinimalParticlesBackground() {
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  const minimalOptions = useMemo(() => ({
+    background: {
+      color: {
+        value: 'transparent',
+      },
+    },
+    fpsLimit: 30, // Lower FPS for better performance
+    interactivity: {
+      events: {
+        onHover: {
+          enable: true,
+          mode: 'grab',
+        },
+        resize: true,
+      },
+      modes: {
+        grab: {
+          distance: 140,
+          links: {
+            opacity: 0.5,
+          },
+        },
+      },
+    },
+    particles: {
+      color: {
+        value: '#facc15',
+      },
+      links: {
+        color: '#facc15',
+        distance: 120,
+        enable: true,
+        opacity: 0.2,
+        width: 1,
+      },
+      move: {
+        enable: true,
+        speed: 0.8,
+        direction: 'none',
+        random: false,
+        straight: false,
+        outModes: {
+          default: 'out',
+        },
+      },
+      number: {
+        density: {
+          enable: true,
+          area: 1200,
+        },
+        value: 40,
+      },
+      opacity: {
+        value: 0.5,
+      },
+      shape: {
+        type: 'circle',
+      },
+      size: {
+        value: { min: 1, max: 2 },
+      },
+    },
+    detectRetina: true,
+  }), []);
+
+  return (
+    <div className="absolute inset-0 z-0">
+      <Particles
+        id="minimal-tsparticles"
+        init={particlesInit}
+        options={minimalOptions}
+        className="w-full h-full"
+      />
+    </div>
+  );
+}

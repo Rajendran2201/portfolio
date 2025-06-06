@@ -167,8 +167,12 @@ article code {
 /* smooth underline animation on links */
 .prose a {
   position: relative;
-  color: #fbbf24; /* yellow-400 */
+  @apply text-white font-bold no-underline;
   text-decoration: none;
+}
+
+.prose a:hover {
+  @apply underline;
 }
 
 .prose a::after {

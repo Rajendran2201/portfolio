@@ -34,7 +34,7 @@ export default function Header() {
     {
       href: "/projects",
       icon: PencilSquareIcon,
-      text: "My Projects",
+      text: "What I Built?",
     },  
     {
       href: "/blog",

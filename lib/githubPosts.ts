@@ -3,6 +3,7 @@ import html from "remark-html";
 
 const repo = "Rajendran2201/my-portfolio-blog";
 const folder = "posts";
+const token = process.env.GITHUB_TOKEN;
 
 // Helper: create URL-friendly slug from filename
 function slugify(filename: string) {
@@ -15,10 +16,17 @@ function slugify(filename: string) {
     .replace(/^-+|-+$/g, "");      // Trim dashes at start/end
 }
 
-// Fetch list of posts from GitHub
+// Fetch list of posts from GitHub (with optional auth token)
 export async function getGitHubPosts() {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github.v3+json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`https://api.github.com/repos/${repo}/contents/${folder}`, {
-    headers: { Accept: "application/vnd.github.v3+json" },
+    headers,
   });
 
   const files = await res.json();
@@ -32,17 +40,19 @@ export async function getGitHubPosts() {
     .filter((file: any) => file.name.endsWith(".md"))
     .map((file: any) => ({
       slug: slugify(file.name),       // URL-friendly slug
-      originalName: file.name,         // Keep original name for fetching content
+      originalName: file.name,        // Original filename with extension
       download_url: file.download_url,
       html_url: file.html_url,
     }));
 }
 
-// ✅ Fetch content of a specific markdown file by original filename
+// Fetch and convert markdown file content to HTML by filename
 export async function getMarkdownContent(filename: string): Promise<string> {
   const rawUrl = `https://raw.githubusercontent.com/${repo}/main/${folder}/${filename}`;
 
-  const res = await fetch(rawUrl);
+  const res = await fetch(rawUrl, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
   if (!res.ok) throw new Error(`Failed to fetch markdown file: ${filename}`);
 
   const markdown = await res.text();

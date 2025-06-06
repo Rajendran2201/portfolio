@@ -76,36 +76,41 @@ export default function Home() {
           <p className="text-gray-400 mt-6 max-w-md text-lg">{tagline.description}</p>
 
           <div className="flex flex-col items-center mt-8 md:relative md:inline-block md:items-start">
-            <Link href="/contact">
-              <button className="px-8 py-3 border-2 border-yellow-500 text-yellow-500 text-lg font-semibold hover:bg-yellow-500 hover:text-black transition rounded-lg relative z-10">
-                {contactLinkText}
-              </button>
-            </Link>
+  <Link href="/contact">
+    <button className="px-8 py-3 border-2 border-yellow-500 text-yellow-500 text-lg font-semibold hover:bg-yellow-500 hover:text-black transition rounded-lg relative z-10">
+      {contactLinkText}
+    </button>
+  </Link>
 
-            <svg
-              className="hidden md:absolute md:left-full md:top-1/2 md:-translate-y-1/2 md:ml-2 md:w-32 md:h-16 md:block"
-              viewBox="0 0 120 60"
-              fill="none"
-            >
-              <path
-                d="M0,40 Q60,10 120,40"
-                stroke="#fff"
-                strokeWidth="2"
-                fill="none"
-                markerEnd="url(#arrowhead)"
-              />
-              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
-              </marker>
-            </svg>
+  {/* Arrow SVG */}
+  <svg
+    className="hidden md:absolute md:left-full md:top-1/2 md:-translate-y-1/2 md:ml-2 md:w-32 md:h-16 md:block"
+    viewBox="0 0 120 60"
+    fill="none"
+  >
+    <path
+      d="M0,40 Q60,10 120,40"
+      stroke="#fff"
+      strokeWidth="2"
+      fill="none"
+      markerEnd="url(#arrowhead)"
+    />
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
+    </marker>
+  </svg>
 
-            <span
-              className="hidden md:block md:absolute md:left-full md:top-1/2 md:ml-36 md:mt-2 text-white font-mono text-sm"
-              style={{ fontFamily: "Comic Sans MS, Comic Sans, cursive" }}
-            >
-              Say hi!
-            </span>
-          </div>
+  {/* Coffee chat message - Option 1 (your current approach, refined) */}
+  <span
+  className="hidden md:block md:absolute md:left-full md:top-1/2 md:ml-36 text-white text-sm leading-tight whitespace-nowrap md:translate-y-4"
+  style={{
+    fontFamily: "Comic Sans MS, Comic Sans, cursive",
+  }}
+>
+  Coffee chat<br />with me!
+</span>
+
+</div>
         </div>
       </section>
 
