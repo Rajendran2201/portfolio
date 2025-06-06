@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Raj",
   image: "/hero.png",
   tagline: {
-    intro: "Hey guys,",
+    intro: "Hey folks,",
     heading: "I'm Raj.",
     highlight: ["explore", "create", "life"],
     description:

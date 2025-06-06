@@ -118,13 +118,14 @@ export default function ParticlesBackground() {
   }), []);
 
   return (
-    <div className="absolute inset-0 z-0">
+    <div className="fixed inset-0 w-full h-full z-0" style={{ minHeight: '100vh' }}>
       <Particles
         id="tsparticles"
         init={particlesInit}
         loaded={particlesLoaded}
         options={options}
         className="w-full h-full"
+        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
       />
     </div>
   );
