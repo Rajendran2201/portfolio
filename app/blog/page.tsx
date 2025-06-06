@@ -27,7 +27,7 @@ export default async function Blog() {
       <ParticlesBackground />
 
       <div className="relative min-h-screen bg-transparent text-white z-40">
-        <Header className="z-50" />
+        <Header />
 
         <section id="blog" className="py-16 px-6 max-w-4xl mx-auto relative z-40">
           <h2 className="text-4xl font-bold mb-8 text-white text-left">Blog</h2>

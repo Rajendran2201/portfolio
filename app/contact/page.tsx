@@ -53,7 +53,7 @@ export default function Contact() {
       <ParticlesBackground />
 
       <div className="relative flex flex-col min-h-screen bg-transparent text-white z-40">
-        <Header className="z-50" />
+        <Header />
 
         <main className="flex-1 relative z-40">
           <section id="contact" className="py-16 px-6 text-center max-w-2xl mx-auto">
@@ -124,7 +124,7 @@ export default function Contact() {
           </section>
         </main>
 
-        <Footer className="relative z-50" />
+        <Footer />
       </div>
     </>
   );

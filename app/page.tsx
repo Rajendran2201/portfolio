@@ -18,7 +18,7 @@ export default function Home() {
       <ParticlesBackground />
 
       <div className="relative min-h-[calc(100vh-var(--header-height))] pt-[var(--header-height)] flex flex-col items-center justify-center bg-transparent text-white z-40">
-        <Header className="z-50" />
+        <Header />
 
         <section className="flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 w-full max-w-7xl mx-auto gap-10 md:gap-16 flex-wrap">
           {/* Profile Image */}

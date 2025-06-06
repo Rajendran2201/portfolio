@@ -68,19 +68,14 @@ export default function ParticlesBackground() {
         enable: false,
       },
       move: {
-        direction: 'none',
+        direction: 'none' as const,
         enable: true,
         outModes: {
-          default: 'bounce',
+          default: 'bounce' as const,
         },
         random: true,
         speed: 1,
         straight: false,
-        attract: {
-          enable: false,
-          rotateX: 600,
-          rotateY: 1200,
-        },
       },
       number: {
         density: {
@@ -207,10 +202,10 @@ export function EnhancedParticlesBackground() {
         },
       },
       move: {
-        direction: 'none',
+        direction: 'none' as const,
         enable: true,
         outModes: {
-          default: 'out',
+          default: 'out' as const,
         },
         random: true,
         speed: { min: 0.5, max: 1.5 },
@@ -238,9 +233,9 @@ export function EnhancedParticlesBackground() {
           enable: true,
           speed: 1,
           sync: false,
-          destroy: 'none',
+          destroy: 'none' as const,
           minimumValue: 0.2,
-          startValue: 'random',
+          startValue: 'random' as const,
         },
       },
       reduceDuplicates: false,
@@ -259,9 +254,9 @@ export function EnhancedParticlesBackground() {
           enable: true,
           speed: 3,
           sync: false,
-          destroy: 'none',
+          destroy: 'none' as const,
           minimumValue: 0.5,
-          startValue: 'random',
+          startValue: 'random' as const,
         },
       },
       stroke: {
@@ -376,11 +371,11 @@ export function MinimalParticlesBackground() {
       move: {
         enable: true,
         speed: 0.8,
-        direction: 'none',
+        direction: 'none' as const,
         random: false,
         straight: false,
         outModes: {
-          default: 'out',
+          default: 'out' as const,
         },
       },
       number: {
