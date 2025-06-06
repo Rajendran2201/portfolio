@@ -4,6 +4,7 @@ import { getGitHubPosts } from '@/lib/githubPosts';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import BooksCarousel from '@/components/booksCarousel';
 
+
 export default async function Blog() {
   const mediumPosts = await getMediumLinks();
   const githubPosts = await getGitHubPosts();

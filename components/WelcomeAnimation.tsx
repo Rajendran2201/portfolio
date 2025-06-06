@@ -19,12 +19,13 @@ export default function WelcomeAnimation() {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4">
         {/* Character Container */}
         <div 
-          className={`relative bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8 rounded-3xl shadow-2xl border-4 border-yellow-400/30 transform transition-all duration-700 ${
-            animate ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 rotate-180'
-          }`}
+          className={`relative bg-gradient-to-br from-gray-900 via-black to-gray-800 p-6 sm:p-8 rounded-3xl shadow-2xl border-4 border-yellow-400/30 transform transition-all duration-700
+            ${animate ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 rotate-180'}
+            max-w-[90vw] sm:max-w-md
+          `}
           style={{
             animation: animate ? 'bounceIn 0.8s ease-out, float 2s ease-in-out infinite 0.8s' : 'none',
             boxShadow: '0 0 50px rgba(251, 191, 36, 0.3), inset 0 0 30px rgba(251, 191, 36, 0.1)'
@@ -35,7 +36,7 @@ export default function WelcomeAnimation() {
             <div className="mb-6 relative">
               {/* Character Image Container */}
               <div 
-                className="relative w-48 h-48 mx-auto rounded-full border-4 border-yellow-400 shadow-lg overflow-hidden"
+                className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-full border-4 border-yellow-400 shadow-lg overflow-hidden"
                 style={{
                   animation: 'characterFloat 3s ease-in-out infinite, glow 2s ease-in-out infinite alternate',
                   background: 'linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%)'
@@ -120,14 +121,14 @@ export default function WelcomeAnimation() {
             </div>
             
             {/* Speech Bubble */}
-            <div className="relative bg-black border-2 border-yellow-400 rounded-2xl p-6 mb-6 shadow-xl">
+            <div className="relative bg-black border-2 border-yellow-400 rounded-2xl p-4 sm:p-6 mb-6 shadow-xl">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black"></div>
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-5 border-r-5 border-b-5 border-transparent border-b-yellow-400"></div>
               
-              <h2 className="text-3xl font-bold text-yellow-400 mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-2">
                 Welcome! ✨
               </h2>
-              <p className="text-yellow-200 text-lg">
+              <p className="text-yellow-200 text-base sm:text-lg">
                 Ready to explore my world?
               </p>
               
@@ -143,7 +144,7 @@ export default function WelcomeAnimation() {
             {/* OK Button */}
             <button
               onClick={handleOkClick}
-              className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-black font-bold py-4 px-10 rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95 border-2 border-yellow-300 text-xl"
+              className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-black font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95 border-2 border-yellow-300 text-lg sm:text-xl"
               style={{
                 animation: 'buttonGlow 2s ease-in-out infinite',
                 textShadow: '0 1px 2px rgba(0,0,0,0.5)'
