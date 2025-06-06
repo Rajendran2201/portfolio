@@ -1,12 +1,25 @@
+"use client";
+
 import React from "react";
 import Header from "@/components/Header";
 import { aboutContent } from "@/src/data/aboutContent";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+const photoGallery = [
+  "/images/photo1.jpeg",
+  "/images/photo2.jpeg",
+  "/images/photo3.jpeg",
+  "/images/photo4.jpeg",
+  "/images/photo5.jpeg",
+  // Add your image paths here
+];
 
 const About: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <section className="max-w-4xl mx-auto px-6 py-16 text-gray-100 bg-black rounded-lg shadow-lg">
+      <section className="max-w-4xl mx-auto px-6 py-16 text-gray-100 bg-black/80 rounded-lg shadow-lg">
         {/* Heading with Download Button */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-4xl font-bold text-yellow-400">{aboutContent.title}</h2>
@@ -62,11 +75,35 @@ const About: React.FC = () => {
             />
           </div>
         </div>
+
+        {/* Photo Carousel */}
+      {/* Photo Carousel (3-at-a-time scrollable view) */}
+{/* Infinite Scrolling Photo Carousel */}
+<div className="mt-12 overflow-hidden">
+  <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
+    Moments Captured 📸
+  </h3>
+  <div className="w-full overflow-hidden relative">
+    <div className="flex gap-4 animate-slide-infinite w-max">
+      {[...photoGallery, ...photoGallery].map((src, idx) => (
+        <div
+          key={idx}
+          className="flex-shrink-0 w-64 h-40 rounded-lg overflow-hidden shadow-lg border border-gray-700"
+        >
+          <img
+            src={src}
+            alt={`Photo ${idx + 1}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
       </section>
     </div>
   );
 };
-
-
 
 export default About;
