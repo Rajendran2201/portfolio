@@ -11,13 +11,12 @@ const About: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-4xl font-bold text-yellow-400">{aboutContent.title}</h2>
           <a
-  href="/resume.pdf"
-  download
-  className="px-5 py-2 text-yellow-400 font-semibold rounded-md border-2 border-yellow-400 border-dotted hover:bg-yellow-400 hover:text-black transition cursor-pointer"
->
-  Download Resume
-</a>
-
+            href="/resume.pdf"
+            download
+            className="px-5 py-2 bg-yellow-500 text-black font-semibold rounded-md hover:bg-yellow-400 transition"
+          >
+            Download Resume
+          </a>
         </div>
 
         {aboutContent.highlights.map((paragraph, idx) => (
