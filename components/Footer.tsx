@@ -17,7 +17,7 @@ export default function Footer() {
         </div>
         <div className="flex space-x-4 mt-4 sm:mt-0">
           <a
-            href="https://github.com"
+            href="https://github.com/Rajendran2201"
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-500 hover:text-yellow-400"
@@ -26,7 +26,7 @@ export default function Footer() {
             <CodeBracketIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/rajendran-s-02b222270/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-500 hover:text-yellow-400"
@@ -35,7 +35,7 @@ export default function Footer() {
             <LinkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/rajastwt"
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-500 hover:text-yellow-400"
