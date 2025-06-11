@@ -79,7 +79,7 @@ export async function getMediumLinks(): Promise<MediumPost[]> {
     // Process and validate feed items
     const posts: MediumPost[] = feed.items
       .slice(0, MAX_POSTS)
-      .map((item: MediumFeedItem, index: number) => {
+      .map((item: MediumFeedItem, index: number): MediumPost => {
         console.log(`Processing item ${index + 1}:`, {
           title: item.title,
           pubDate: item.pubDate,
@@ -96,7 +96,7 @@ export async function getMediumLinks(): Promise<MediumPost[]> {
           guid: item.guid
         };
       })
-      .filter(post => post.title !== 'No Title Available' && post.link !== '#');
+      .filter((post: MediumPost) => post.title !== 'No Title Available' && post.link !== '#');
 
     // Cache the results
     cachedData = {
