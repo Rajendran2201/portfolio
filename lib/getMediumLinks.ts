@@ -1,8 +1,7 @@
-// lib/getMediumLinks.ts
+// lib/getMediumLinks.ts - IMPROVED VERSION
 import Parser from 'rss-parser';
 
-// Define types for better type safety
-type MediumPost = {
+export type MediumPost = {
   title: string;
   link: string;
   pubDate?: string;
@@ -20,24 +19,19 @@ type MediumFeedItem = {
   guid?: string;
 };
 
-// Configuration
 const MEDIUM_USERNAME = 'asrajendrayadav';
 const MAX_POSTS = 5;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+const CACHE_DURATION = 5 * 60 * 1000;
 
-// In-memory cache to reduce API calls during development
 let cachedData: {
   posts: MediumPost[];
   timestamp: number;
 } | null = null;
 
-/**
- * Fetches Medium articles from RSS feed with caching and error handling
- */
 export async function getMediumLinks(): Promise<MediumPost[]> {
-  // Check cache first (useful during development)
+  // Check cache first
   if (cachedData && Date.now() - cachedData.timestamp < CACHE_DURATION) {
-    console.log('Returning cached Medium posts');
+    console.log('✅ Returning cached Medium posts');
     return cachedData.posts;
   }
 
@@ -45,58 +39,84 @@ export async function getMediumLinks(): Promise<MediumPost[]> {
     headers: {
       'User-Agent': 'Mozilla/5.0 (compatible; RSS Reader)',
       'Accept': 'application/rss+xml, application/xml, text/xml',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0'
     },
-    timeout: 10000, // 10 second timeout
+    timeout: 15000, // Increased timeout for production
   });
 
-  // Add timestamp and random parameter to bust all caches
+  // Use RSS2JSON as a fallback service to avoid CORS issues
   const timestamp = Date.now();
-  const random = Math.random().toString(36).substring(7);
-  const feedUrl = `https://medium.com/feed/@${MEDIUM_USERNAME}?t=${timestamp}&r=${random}`;
+  const directFeedUrl = `https://medium.com/feed/@${MEDIUM_USERNAME}`;
+  const proxyFeedUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(directFeedUrl)}&api_key=your_api_key_here&count=${MAX_POSTS}`;
 
   try {
-    console.log(`Fetching Medium feed from: ${feedUrl}`);
+    console.log('🔄 Attempting to fetch Medium posts...');
     
-    const feed = await parser.parseURL(feedUrl);
-    
-    if (!feed || !feed.items) {
-      throw new Error('Invalid feed response - no items found');
-    }
-
-    console.log(`Successfully fetched ${feed.items.length} items from Medium RSS feed`);
-    
-    // Log feed metadata for debugging
-    console.log('Feed info:', {
-      title: feed.title,
-      description: feed.description,
-      lastBuildDate: feed.lastBuildDate,
-      itemCount: feed.items.length
-    });
-
-    // Process and validate feed items
-    const posts: MediumPost[] = feed.items
-      .slice(0, MAX_POSTS)
-      .map((item: MediumFeedItem, index: number): MediumPost => {
-        console.log(`Processing item ${index + 1}:`, {
-          title: item.title,
-          pubDate: item.pubDate,
-          link: item.link,
-          hasContent: !!item.contentSnippet
+    // Try direct feed first
+    let feed;
+    try {
+      console.log('📡 Trying direct Medium RSS feed...');
+      feed = await parser.parseURL(directFeedUrl);
+      console.log('✅ Direct Medium RSS feed successful');
+    } catch (directError) {
+      console.warn('⚠️ Direct feed failed, trying proxy service...', directError);
+      
+      // Fallback to RSS2JSON service
+      try {
+        const response = await fetch(proxyFeedUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(10000), // 10 second timeout
         });
 
-        return {
-          title: item.title || 'No Title Available',
-          link: item.link || '#',
-          pubDate: item.pubDate,
-          contentSnippet: item.contentSnippet,
-          categories: item.categories || [],
-          guid: item.guid
+        if (!response.ok) {
+          throw new Error(`RSS2JSON service failed: ${response.status} ${response.statusText}`);
+        }
+
+        const jsonData = await response.json();
+        
+        if (jsonData.status !== 'ok') {
+          throw new Error(`RSS2JSON error: ${jsonData.message || 'Unknown error'}`);
+        }
+
+        // Convert RSS2JSON format to our expected format
+        feed = {
+          items: jsonData.items?.map((item: any) => ({
+            title: item.title,
+            link: item.link,
+            pubDate: item.pubDate,
+            contentSnippet: item.description?.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
+            categories: item.categories || [],
+            guid: item.guid
+          })) || []
         };
-      })
-      .filter((post: MediumPost) => post.title !== 'No Title Available' && post.link !== '#');
+        
+        console.log('✅ RSS2JSON proxy service successful');
+      } catch (proxyError) {
+        console.error('❌ Both direct and proxy methods failed');
+        throw new Error(`All Medium feed methods failed. Direct: ${directError}. Proxy: ${proxyError}`);
+      }
+    }
+
+    if (!feed || !feed.items || feed.items.length === 0) {
+      console.warn('⚠️ Feed returned no items');
+      return cachedData?.posts || [];
+    }
+
+    console.log(`📊 Successfully fetched ${feed.items.length} items from Medium`);
+
+    const posts: MediumPost[] = feed.items
+      .slice(0, MAX_POSTS)
+      .map((item: MediumFeedItem): MediumPost => ({
+        title: item.title || 'Untitled Post',
+        link: item.link || '#',
+        pubDate: item.pubDate,
+        contentSnippet: item.contentSnippet,
+        categories: item.categories || [],
+        guid: item.guid
+      }))
+      .filter((post: MediumPost) => post.title !== 'Untitled Post' && post.link !== '#');
 
     // Cache the results
     cachedData = {
@@ -104,64 +124,20 @@ export async function getMediumLinks(): Promise<MediumPost[]> {
       timestamp: Date.now()
     };
 
-    console.log(`Processed ${posts.length} valid Medium posts`);
-    
-    // Log the latest post for verification
-    if (posts.length > 0) {
-      console.log('Latest post:', {
-        title: posts[0].title,
-        pubDate: posts[0].pubDate,
-        link: posts[0].link
-      });
-    }
-
+    console.log(`✅ Processed ${posts.length} valid Medium posts`);
     return posts;
     
   } catch (error) {
-    console.error('Error fetching Medium feed:', error);
+    console.error('❌ Error fetching Medium feed:', error);
     
-    // Provide more specific error information
-    if (error instanceof Error) {
-      console.error('Error details:', {
-        message: error.message,
-        name: error.name,
-        stack: error.stack
-      });
-    }
-
-    // Return cached data if available, otherwise empty array
-    if (cachedData) {
-      console.log('Returning cached data due to fetch error');
+    // Return cached data if available
+    if (cachedData && cachedData.posts.length > 0) {
+      console.log('📋 Returning cached data due to fetch error');
       return cachedData.posts;
     }
 
+    // Return empty array instead of throwing
+    console.log('📭 No cached data available, returning empty array');
     return [];
   }
 }
-
-/**
- * Alternative function that forces a fresh fetch (bypasses cache)
- */
-export async function getMediumLinksFresh(): Promise<MediumPost[]> {
-  // Clear cache to force fresh fetch
-  cachedData = null;
-  return getMediumLinks();
-}
-
-/**
- * Get cached posts without making a network request
- */
-export function getCachedMediumLinks(): MediumPost[] | null {
-  return cachedData?.posts || null;
-}
-
-/**
- * Clear the cache manually
- */
-export function clearMediumCache(): void {
-  cachedData = null;
-  console.log('Medium cache cleared');
-}
-
-// Export types for use in other files
-export type { MediumPost };
