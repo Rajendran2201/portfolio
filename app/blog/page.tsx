@@ -1,26 +1,111 @@
 import Header from '@/components/Header';
-import { getMediumLinks } from '@/lib/getMediumLinks';
+import { getMediumLinks, type MediumPost } from '@/lib/getMediumLinks';
 import { getGitHubPosts } from '@/lib/githubPosts';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import BooksCarousel from '@/components/booksCarousel';
 
+// Disable caching for this page to always fetch fresh data
+export const revalidate = 0;
+
+type BlogPost = {
+  title: string;
+  link: string;
+  type: 'medium' | 'github';
+  pubDate?: string;
+  contentSnippet?: string;
+  categories?: string[];
+};
+
+async function fetchBlogData() {
+  try {
+    console.log('Fetching blog data...');
+    
+    // Fetch both Medium and GitHub posts concurrently
+    const [mediumPosts, githubPosts] = await Promise.allSettled([
+      getMediumLinks(),
+      getGitHubPosts()
+    ]);
+
+    // Handle Medium posts result
+    const mediumData: MediumPost[] = mediumPosts.status === 'fulfilled' 
+      ? mediumPosts.value 
+      : [];
+    
+    if (mediumPosts.status === 'rejected') {
+      console.error('Failed to fetch Medium posts:', mediumPosts.reason);
+    }
+
+    // Handle GitHub posts result
+    const githubData = githubPosts.status === 'fulfilled' 
+      ? githubPosts.value 
+      : [];
+    
+    if (githubPosts.status === 'rejected') {
+      console.error('Failed to fetch GitHub posts:', githubPosts.reason);
+    }
+
+    // Combine and format all posts
+    const allPosts: BlogPost[] = [
+      ...mediumData.map((post) => ({
+        title: post.title,
+        link: post.link,
+        type: 'medium' as const,
+        pubDate: post.pubDate,
+        contentSnippet: post.contentSnippet,
+        categories: post.categories,
+      })),
+      ...githubData.map((post) => ({
+        title: post.slug,
+        link: `/posts/${post.slug}`,
+        type: 'github' as const,
+        // Add pubDate if your GitHub posts have date info
+        // pubDate: post.date,
+      })),
+    ];
+
+    // Sort posts by date (newest first) if pubDate is available
+    allPosts.sort((a, b) => {
+      if (!a.pubDate || !b.pubDate) return 0;
+      return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+    });
+
+    console.log(`Successfully fetched ${mediumData.length} Medium posts and ${githubData.length} GitHub posts`);
+
+    return {
+      allPosts,
+      mediumCount: mediumData.length,
+      githubCount: githubData.length,
+      errors: {
+        medium: mediumPosts.status === 'rejected' ? mediumPosts.reason : null,
+        github: githubPosts.status === 'rejected' ? githubPosts.reason : null,
+      }
+    };
+
+  } catch (error) {
+    console.error('Error in fetchBlogData:', error);
+    return {
+      allPosts: [],
+      mediumCount: 0,
+      githubCount: 0,
+      errors: {
+        medium: null,
+        github: null,
+        general: error instanceof Error ? error.message : 'Unknown error occurred'
+      }
+    };
+  }
+}
 
 export default async function Blog() {
-  const mediumPosts = await getMediumLinks();
-  const githubPosts = await getGitHubPosts();
-
-  const allPosts = [
-    ...mediumPosts.map((post) => ({
-      title: post.title,
-      link: post.link,
-      type: 'medium',
-    })),
-    ...githubPosts.map((post) => ({
-      title: post.slug,
-      link: `/posts/${post.slug}`,
-      type: 'github',
-    })),
-  ];
+  const { allPosts, mediumCount, githubCount, errors } = await fetchBlogData();
+  
+  // Log for debugging
+  console.log('Blog page render:', {
+    totalPosts: allPosts.length,
+    mediumCount,
+    githubCount,
+    hasErrors: Object.values(errors).some(error => error !== null)
+  });
 
   return (
     <>
@@ -35,7 +120,7 @@ export default async function Blog() {
           <ul className="space-y-4 list-disc list-inside text-white text-base">
             {allPosts.map((post, index) => (
               <li
-                key={index}
+                key={`${post.type}-${post.link}-${index}`}
                 className="hover:text-yellow-400 transition-colors duration-200"
               >
                 <a
@@ -52,6 +137,24 @@ export default async function Blog() {
               </li>
             ))}
           </ul>
+
+          {/* Debug info (remove in production) */}
+          {process.env.NODE_ENV === 'development' && (
+            <details className="mt-8 p-4 bg-gray-900/50 rounded-lg border border-gray-700/30">
+              <summary className="text-gray-400 cursor-pointer hover:text-white">
+                🐛 Debug Info (Dev Only)
+              </summary>
+              <pre className="mt-2 text-xs text-gray-500 overflow-auto">
+                {JSON.stringify({ 
+                  totalPosts: allPosts.length, 
+                  mediumCount, 
+                  githubCount, 
+                  errors,
+                  timestamp: new Date().toISOString()
+                }, null, 2)}
+              </pre>
+            </details>
+          )}
         </section>
 
         {/* Books Carousel */}
