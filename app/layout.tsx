@@ -3,7 +3,6 @@ import { Quicksand, Gloria_Hallelujah } from "next/font/google";
 import "./globals.css";
 import ClientBody from "@/components/ClientBody";
 import Header from "@/components/Header";
-import { Analytics } from "@vercel/analytics/react"; // ✅ Use the latest package path
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -19,15 +18,13 @@ const gloriaHallelujah = Gloria_Hallelujah({
 
 export const metadata: Metadata = {
   title: "Raj's Portfolio",
-  description:
-    "Portfolio of Raj, an undergraduate AI student who loves building things in public, writing blogs, and teaching.",
+  description: "Portfolio of Raj, an undergraduate AI student who loves building things in public, writing blogs, and teaching.",
   icons: {
     icon: "/favicon.png",
   },
   openGraph: {
     title: "Raj's Portfolio",
-    description:
-      "Portfolio of Raj, an undergraduate AI student who loves building things in public, writing blogs, and teaching.",
+    description: "Portfolio of Raj, an undergraduate AI student who loves building things in public, writing blogs, and teaching.",
     url: "https://your-portfolio-url.com",
     siteName: "Raj's Portfolio",
     type: "website",
@@ -45,11 +42,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr" className={`${quicksand.variable} ${gloriaHallelujah.variable}`}>
+    <html lang="en" dir="ltr">
       <body suppressHydrationWarning className="flex flex-col min-h-screen">
         <Header />
-        <ClientBody className="flex-1">{children}</ClientBody>
-        <Analytics /> {/* ✅ Add this to enable Vercel Analytics */}
+        <ClientBody className='flex-1'>
+          {children}
+        </ClientBody>
       </body>
     </html>
   );
