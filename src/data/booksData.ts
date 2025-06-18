@@ -65,4 +65,17 @@ export const books = [
     cover: "/images/books/mans-search-for-meaning.png",
     description: "A Holocaust survivor’s insights on purpose and resilience.",
   },
+  {
+    title: "Show Your Work!",
+    author: "Austin Kleon",
+    cover: "/images/books/show-your-work.png",
+    description: "A guide to sharing your creativity and getting discovered.",
+  },
+  {
+    title: "Live With Me, Die With Me",
+    author: "Chirasree Bose",
+    cover: "/images/books/live-with-me-die-with-me.png",
+    description: "A gripping narrative of love, crime, and psychological suspense.",
+  }
+  
 ];
