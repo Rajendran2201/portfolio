@@ -1,6 +1,6 @@
 // app/page.tsx or app/home/page.tsx
 
-'use client';
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +40,9 @@ export default function Home() {
 
           {/* Text Content */}
           <div className="text-center md:text-left w-full max-w-xl">
-            <p className="text-yellow-400 text-base sm:text-lg">{tagline.intro}</p>
+            <p className="text-yellow-400 text-base sm:text-lg">
+              {tagline.intro}
+            </p>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mt-4">
               {tagline.heading}
@@ -52,8 +54,16 @@ export default function Home() {
                 <span className="font-bold text-gray-300 underline decoration-2 decoration-gray-400 underline-offset-2">
                   {tagline.highlight[0]}
                 </span>
-                <svg className="absolute left-0 bottom-0 w-full h-1" viewBox="0 0 100 10">
-                  <path d="M0,8 Q50,12 100,8" stroke="#d1d5db" strokeWidth="2" fill="none" />
+                <svg
+                  className="absolute left-0 bottom-0 w-full h-1"
+                  viewBox="0 0 100 10"
+                >
+                  <path
+                    d="M0,8 Q50,12 100,8"
+                    stroke="#d1d5db"
+                    strokeWidth="2"
+                    fill="none"
+                  />
                 </svg>
               </span>
               <span className="text-gray-300">, </span>
@@ -90,7 +100,9 @@ export default function Home() {
               <span className="text-gray-300">.</span>
             </h2>
 
-            <p className="text-gray-400 mt-6 text-base sm:text-lg">{tagline.description}</p>
+            <p className="text-gray-400 mt-6 text-base sm:text-lg">
+              {tagline.description}
+            </p>
 
             <div className="flex flex-col items-center mt-8 md:relative md:inline-block md:items-start">
               <Link href="/contact">
@@ -112,7 +124,14 @@ export default function Home() {
                   fill="none"
                   markerEnd="url(#arrowhead)"
                 />
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <marker
+                  id="arrowhead"
+                  markerWidth="10"
+                  markerHeight="7"
+                  refX="10"
+                  refY="3.5"
+                  orient="auto"
+                >
                   <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
                 </marker>
               </svg>
@@ -133,7 +152,7 @@ export default function Home() {
         </section>
 
         {/* Quote Section */}
-        <div className="w-full px-4 mt-4 mb-6">
+        <div className="w-full px-4 mt-8 mb-6">
           <p className="text-white-400 italic text-base mt-20 text-center max-w-xl mx-auto font-gloria-hallelujah">
             {quote}
           </p>
