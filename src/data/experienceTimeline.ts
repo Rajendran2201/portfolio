@@ -28,7 +28,7 @@ export const experienceTimeline: Experience[] = [
   },
   {
     role: "Joint Secretary - Entrepreneurship Development Cell, CIT",
-    time: "August 2024 - Present",
+    time: "August 2024 - July 2025",
   },
   {
     role: "Member - IEEE Student Chapter CIT",
