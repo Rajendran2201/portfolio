@@ -1,4 +1,4 @@
-'use-client';
+"use client";
 import Header from '@/components/Header';
 import { getMediumLinks } from '@/lib/getMediumLinks';
 import { getGitHubPosts } from '@/lib/githubPosts';
