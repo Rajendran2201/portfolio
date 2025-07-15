@@ -7,35 +7,39 @@ export interface Experience {
 
 export const experienceTimeline: Experience[] = [
   {
+    role: "Secretary - EDC CIT",
+    time: "July 2025 - Present",
+  },
+  {
     role: "Technical Lead - FOSS CIT",
-    time: "May 2025 - Present (2 months)",
+    time: "May 2025 - Present",
   },
   {
     role: "Research Intern - Telkom University",
-    time: "May 2025 - Present (2 months)",
+    time: "May 2025 - Present",
   },
   {
     role: "Business Development Executive - Salar Space",
-    time: "April 2025 - Present (3 months)",
+    time: "April 2025 - Present",
   },
   {
     role: "Member - The Institution of Engineers (India)",
-    time: "September 2024 - Present (10 months)",
+    time: "September 2024 - Present",
   },
   {
     role: "Joint Secretary - Entrepreneurship Development Cell, CIT",
-    time: "August 2024 - Present (11 months)",
+    time: "August 2024 - Present",
   },
   {
     role: "Member - IEEE Student Chapter CIT",
-    time: "August 2024 - Present (11 months)",
+    time: "August 2024 - Present",
   },
   {
     role: "Student Coordinator - Institution’s Innovation Council",
-    time: "February 2024 - Present (1 year 5 months)",
+    time: "February 2024 - Present",
   },
   {
     role: "Joint Secretary - Association BTech AI&DS",
-    time: "April 2024 - April 2025 (1 year 1 month)",
+    time: "April 2024 - April 2025",
   },
 ];
