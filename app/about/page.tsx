@@ -70,18 +70,6 @@ const About: React.FC = () => {
             />
           </div>
 
-          {/* LeetCode Contributions */}
-          <div className="mt-12">
-            <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
-              LeetCode Contributions
-            </h3>
-            <img
-              src="https://leetcard.jacoblin.cool/rajendran2201?theme=dark"
-              alt="LeetCode stats card"
-              className="w-full max-w-xl mx-auto rounded-lg shadow-lg"
-            />
-          </div>
-
           {/* WakaTime Activity */}
           <div className="mt-12">
             <h3 className="text-2xl font-semibold mb-4 text-yellow-400">
