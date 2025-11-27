@@ -7,8 +7,12 @@ export interface Experience {
 
 export const experienceTimeline: Experience[] = [
   {
+    role: "Secretary - Student's Union",
+    time: "August 2025 - Present",
+  },
+  {
     role: "Secretary - Entrepreneurship Development Cell, CIT",
-    time: "July 2025 - Present",
+    time: "June 2025 - August 2025",
   },
   {
     role: "Technical Lead - FOSS CIT",
