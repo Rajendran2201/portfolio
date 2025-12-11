@@ -1,4 +1,3 @@
-// lib/getMediumLinks.ts
 import Parser from 'rss-parser';
 
 type MediumPost = {
@@ -7,11 +6,14 @@ type MediumPost = {
 };
 
 export async function getMediumLinks(): Promise<MediumPost[]> {
-  const parser = new Parser();
-  const feed = await parser.parseURL('https://medium.com/feed/%40rajendran22');
+  const parser = new Parser({
+    headers: { "User-Agent": "Mozilla/5.0" }
+  });
+
+  const feed = await parser.parseURL('https://rajendran22.medium.com/feed');
 
   return feed.items.slice(0, 5).map((item) => ({
-    title: item.title || 'Untitled',
-    link: item.link || '#',
+    title: item.title ?? 'Untitled',
+    link: item.link ?? item.guid ?? '#'
   }));
 }
